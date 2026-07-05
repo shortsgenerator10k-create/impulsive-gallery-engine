@@ -1,20 +1,30 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# ⚡ Impulsive Gallery Engine
 
-# Run and deploy your AI Studio app
+A high-performance visual database and multi-layer photo tagging gateway engineered for speed, scalability, and precision bulk-organization. Built with native React and TypeScript to deliver a seamless, interactive user interface without bloatware wrappers.
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/74bfef75-b340-42e3-8b3c-d548e28826e1
+## 🌟 Key Features
 
-## Run Locally
+* **Visual Architecture Gateway:** Fast, responsive, and clean UI engineered for instant media retrieval and rendering.
+* **Multi-Layer Tagging System:** Advanced categorization allowing single and bulk photo organization with precise data mapping.
+* **Enterprise-Grade Security:** Fully isolated environment configurations (`.env`) ensuring API keys and database credentials remain 100% protected.
+* **Lightning-Fast Build:** Powered by Vite for near-instant Hot Module Replacement (HMR) and optimized production bundles.
 
-**Prerequisites:**  Node.js
+---
 
+## 🛠️ Tech Stack
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+* **Frontend:** React, TypeScript
+* **Build Tool:** Vite
+* **Database & Auth:** Firebase (Auth, Firestore, Storage)
+* **Styling:** Modern CSS / Tailwind (Responsive Design)
+
+---
+
+## 🚀 Quick Start & Local Setup
+
+1. **Clone the Repository:**
+   ```bash
+   git clone [https://github.com/shortsgenerator10k/impulsive-gallery-engine.git](https://github.com/shortsgenerator10k/impulsive-gallery-engine.git)
+   cd impulsive-gallery-engine
