@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,900;1,900&family=Syne:wght@800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Syne", sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
+@layer base {
+  :root {
+    --bg-surface-0: #FFFFFF;
+    --bg-surface-1: #F5F5F7;
+    --border-main: #E5E7EB;
+    --text-primary: #111111;
+    --text-secondary: #6B7280;
+    --accent: #000000;
+    --accent-glow: rgba(0, 0, 0, 0.1);
+  }
+
+  /* 1. NEON CYBER (Default Dark) */
+  .theme-cyber {
+    --bg-surface-0: #000000;
+    --bg-surface-1: #0B0B0C;
+    --border-main: #1F1F23;
+    --text-primary: #FFFFFF;
+    --text-secondary: #8E8E93;
+    --accent: #00F2FE;
+    --accent-glow: rgba(0, 242, 254, 0.3);
+  }
+
+  /* 2. GHOST PROTO (Default Light) */
+  .theme-ghost {
+    --bg-surface-0: #FFFFFF;
+    --bg-surface-1: #F8F9FA;
+    --border-main: #E9ECEF;
+    --text-primary: #1A1D23;
+    --text-secondary: #ADB5BD;
+    --accent: #339AF0;
+    --accent-glow: rgba(51, 154, 240, 0.2);
+  }
+
+  /* 3. ROYAL CRIMSON (Calligraphy/Serif + Red/Gold) */
+  .theme-royal {
+    --bg-surface-0: #1A0B0B;
+    --bg-surface-1: #251212;
+    --border-main: #3D2222;
+    --text-primary: #FFF5F5;
+    --text-secondary: #C92A2A;
+    --accent: #FFD43B;
+    --accent-glow: rgba(255, 212, 59, 0.4);
+  }
+
+  /* 4. EMERALD VIBE (Glassmorphism) */
+  .theme-emerald {
+    --bg-surface-0: #051B11;
+    --bg-surface-1: #0D2D20;
+    --border-main: #144432;
+    --text-primary: #D1FFEC;
+    --text-secondary: #51CF66;
+    --accent: #63FF88;
+    --accent-glow: rgba(99, 255, 136, 0.3);
+  }
+
+  /* 5. MIDNIGHT AMETHYST (Premium Blue/Purple) */
+  .theme-amethyst {
+    --bg-surface-0: #0B0E14;
+    --bg-surface-1: #141824;
+    --border-main: #1F2538;
+    --text-primary: #EBEFFF;
+    --text-secondary: #748FFC;
+    --accent: #BE4BDB;
+    --accent-glow: rgba(190, 75, 219, 0.4);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #e5e7eb;
+    border-radius: 10px;
+  }
+  .theme-cyber .custom-scrollbar::-webkit-scrollbar-thumb,
+  .theme-royal .custom-scrollbar::-webkit-scrollbar-thumb,
+  .theme-emerald .custom-scrollbar::-webkit-scrollbar-thumb,
+  .theme-amethyst .custom-scrollbar::-webkit-scrollbar-thumb {
+     background: #1F1F23;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #d1d5db;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .card-3d {
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s ease;
+    transform-style: preserve-3d;
+  }
+  
+  .theme-cyber .card-3d:hover,
+  .theme-amethyst .card-3d:hover,
+  .theme-royal .card-3d:hover {
+    transform: rotateX(5deg) rotateY(10deg) translateZ(30px);
+    box-shadow: 0 25px 50px -12px var(--accent-glow);
+  }
+
+  .theme-ghost .card-3d:hover,
+  .theme-emerald .card-3d:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .engine-glitch {
+    position: relative;
+  }
+
+  .theme-cyber .engine-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 2px;
+    text-shadow: -1px 0 #ff00c1;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-anim {
+    0% { clip: rect(31px, 9999px, 94px, 0); }
+    20% { clip: rect(62px, 9999px, 42px, 0); }
+    40% { clip: rect(10px, 9999px, 86px, 0); }
+    60% { clip: rect(56px, 9999px, 7px, 0); }
+    80% { clip: rect(96px, 9999px, 32px, 0); }
+    100% { clip: rect(25px, 9999px, 81px, 0); }
+  }
+
+  .calligraphy {
+    font-family: var(--font-serif);
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+
+  .glass-morphism {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}

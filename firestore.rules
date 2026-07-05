@@ -1,0 +1,97 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Phase 3: Primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Phase 4: Entity Validations
+    function isValidImage(data) {
+      return data.url is string && data.url.size() <= 1500000 &&
+             data.keywords is list && data.keywords.size() <= 100 &&
+             (data.keywords.size() == 0 || data.keywords[0] is string) &&
+             data.ownerId == request.auth.uid &&
+             isValidId(data.ownerId) &&
+             (!('folderId' in data) || data.folderId == null || (data.folderId is string && data.folderId.size() <= 128)) &&
+             (!('title' in data) || data.title == null || (data.title is string && data.title.size() <= 200));
+    }
+
+    function isValidFolder(data) {
+      return data.name is string && data.name.size() <= 100 &&
+             data.ownerId == request.auth.uid &&
+             isValidId(data.ownerId);
+    }
+
+    function isValidMemory(data) {
+      return data.keywords is list && data.keywords.size() <= 500 &&
+             data.synonyms is map && data.synonyms.keys().size() <= 500 &&
+             data.updatedAt == request.time;
+    }
+
+    // Resource Rules
+    match /images/{imageId} {
+      allow get: if isSignedIn() && existing().ownerId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+      
+      allow create: if isSignedIn() && 
+                      isValidId(imageId) && 
+                      isValidImage(incoming()) && 
+                      incoming().createdAt == request.time;
+
+      allow update: if isSignedIn() && 
+                      isValidImage(incoming()) && 
+                      incoming().ownerId == existing().ownerId &&
+                      incoming().createdAt == existing().createdAt &&
+                      (
+                        // Action: Tagging, Moving or Renaming
+                        (incoming().diff(existing()).affectedKeys().hasAny(['keywords', 'folderId', 'title']) &&
+                         incoming().diff(existing()).affectedKeys().hasOnly(['keywords', 'folderId', 'title']))
+                      );
+
+      allow delete: if isSignedIn() && existing().ownerId == request.auth.uid;
+    }
+
+    match /folders/{folderId} {
+      allow read: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if isSignedIn() && 
+                      incoming().ownerId == request.auth.uid && 
+                      incoming().createdAt == request.time;
+      allow update: if isSignedIn() && 
+                      existing().ownerId == request.auth.uid &&
+                      incoming().ownerId == request.auth.uid &&
+                      incoming().createdAt == existing().createdAt &&
+                      incoming().diff(existing()).affectedKeys().hasOnly(['name']);
+      allow delete: if isSignedIn() && existing().ownerId == request.auth.uid;
+    }
+
+    match /memories/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidMemory(incoming());
+      allow update: if isOwner(userId) && 
+                      isValidMemory(incoming()) &&
+                      (incoming().diff(existing()).affectedKeys().hasOnly(['keywords', 'synonyms', 'updatedAt']));
+    }
+  }
+}

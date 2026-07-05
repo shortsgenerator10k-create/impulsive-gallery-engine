@@ -1,0 +1,54 @@
+{
+  "entities": {
+    "Image": {
+      "title": "Image Record",
+      "description": "Metadata for a stored image",
+      "type": "object",
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "keywords": { "type": "array", "items": { "type": "string" } },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "folderId": { "type": "string" },
+        "title": { "type": "string" }
+      },
+      "required": ["url", "keywords", "ownerId", "createdAt"]
+    },
+    "Folder": {
+      "title": "Gallery Folder",
+      "description": "Organization unit for images",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "ownerId", "createdAt"]
+    },
+    "Memory": {
+      "title": "Gallery Memory",
+      "description": "User-defined keywords and synonyms",
+      "type": "object",
+      "properties": {
+        "keywords": { "type": "array", "items": { "type": "string" } },
+        "synonyms": { "type": "object" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["keywords", "synonyms", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "images/{imageId}": {
+      "schema": "Image",
+      "description": "Individual image records"
+    },
+    "folders/{folderId}": {
+      "schema": "Folder",
+      "description": "User created folders"
+    },
+    "memories/{userId}": {
+      "schema": "Memory",
+      "description": "Keyword memory for a specific user"
+    }
+  }
+}
