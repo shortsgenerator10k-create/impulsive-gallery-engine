@@ -15,6 +15,7 @@ export const INITIAL_SYNONYMS: Record<string, string> = {
 export const SAMPLE_KEYWORDS = ["marketing_v1", "vacation_2024"];
 
 export const THEMES: ThemeConfig[] = [
+  { id: 'ENTERPRISE', name: 'Enterprise Dark', className: 'theme-enterprise', isDark: true, fontClass: 'font-sans' },
   { id: 'CYBER', name: 'Neon Cyber', className: 'theme-cyber', isDark: true, fontClass: 'font-sans' },
   { id: 'GHOST', name: 'Ghost Proto', className: 'theme-ghost', isDark: false, fontClass: 'font-sans' },
   { id: 'ROYAL', name: 'Royal Crimson', className: 'theme-royal', isDark: true, fontClass: 'font-serif' },

@@ -26,7 +26,7 @@ export interface GallerySession {
   keywordMap: Record<string, string[]>; // keyword -> [imageIds]
 }
 
-export type ThemeId = 'CYBER' | 'GHOST' | 'ROYAL' | 'EMERALD' | 'AMETHYST';
+export type ThemeId = 'ENTERPRISE' | 'CYBER' | 'GHOST' | 'ROYAL' | 'EMERALD' | 'AMETHYST';
 
 export interface ThemeConfig {
   id: ThemeId;

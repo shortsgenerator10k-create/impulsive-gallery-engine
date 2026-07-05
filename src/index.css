@@ -6,6 +6,13 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --font-display: "Syne", sans-serif;
   --font-serif: "Playfair Display", serif;
+
+  --color-surface-0: var(--bg-surface-0);
+  --color-surface-1: var(--bg-surface-1);
+  --color-main: var(--border-main);
+  --color-secondary: var(--text-secondary);
+  --color-accent: var(--accent);
+  --color-accent-glow: var(--accent-glow);
 }
 
 @layer base {
@@ -17,6 +24,17 @@
     --text-secondary: #6B7280;
     --accent: #000000;
     --accent-glow: rgba(0, 0, 0, 0.1);
+  }
+
+  /* 0. ENTERPRISE DARK (Sleek, Modern Enterprise Theme) */
+  .theme-enterprise {
+    --bg-surface-0: #090B11;
+    --bg-surface-1: #111420;
+    --border-main: #1F2437;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --accent: #6366F1;
+    --accent-glow: rgba(99, 102, 241, 0.15);
   }
 
   /* 1. NEON CYBER (Default Dark) */
@@ -85,11 +103,12 @@
     background: #e5e7eb;
     border-radius: 10px;
   }
+  .theme-enterprise .custom-scrollbar::-webkit-scrollbar-thumb,
   .theme-cyber .custom-scrollbar::-webkit-scrollbar-thumb,
   .theme-royal .custom-scrollbar::-webkit-scrollbar-thumb,
   .theme-emerald .custom-scrollbar::-webkit-scrollbar-thumb,
   .theme-amethyst .custom-scrollbar::-webkit-scrollbar-thumb {
-     background: #1F1F23;
+     background: var(--border-main);
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #d1d5db;
@@ -104,6 +123,11 @@
     transform-style: preserve-3d;
   }
   
+  .theme-enterprise .card-3d:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 15px 30px -10px var(--accent-glow), 0 0 15px var(--accent-glow);
+  }
+
   .theme-cyber .card-3d:hover,
   .theme-amethyst .card-3d:hover,
   .theme-royal .card-3d:hover {

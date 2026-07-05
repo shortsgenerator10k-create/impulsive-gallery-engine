@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Search, History, BookMarked, Layers, FolderPlus, Folder as FolderIcon, Download, Upload, Trash2, Archive, Zap, MoreVertical } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Folder } from '../types';
+import { Folder, ThemeId } from '../types';
 
 interface SidebarProps {
   keywords: string[];
@@ -25,12 +25,13 @@ interface SidebarProps {
   onDeleteFolder: (folderId: string) => void;
   onRenameFolder: (folderId: string, name: string) => void;
   isDarkMode: boolean;
+  themeId?: ThemeId;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ 
   keywords, synonyms, onTagAction, selectionCount, isOpen, onClose,
   searchQuery, onSearchChange, folders, currentFolderId, onFolderSelect, onCreateFolder, onMoveToFolder,
-  onDeleteFolder, onRenameFolder, isDarkMode
+  onDeleteFolder, onRenameFolder, isDarkMode, themeId
 }) => {
   const [newFolderName, setNewFolderName] = useState('');
   const [showFolderInput, setShowFolderInput] = useState(false);
@@ -56,16 +57,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
         id="gallery-sidebar" 
         className={`fixed md:relative z-40 w-72 md:w-80 border-r h-full flex flex-col p-6 overflow-y-auto custom-scrollbar transition-all duration-500 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        } ${isDarkMode ? 'bg-[#0B0B0C] border-[#1F1F23]' : 'bg-white border-gray-100'}`}
+        } ${isDarkMode ? 'bg-[#090D16] border-slate-800' : 'bg-white border-gray-100'}`}
       >
         <div className="mb-10">
           <div className="flex items-center gap-2 mb-1">
-             <div className={`w-5 h-5 rounded flex items-center justify-center transition-colors shadow-[0_0_10px] ${isDarkMode ? 'bg-accent shadow-accent/40' : 'bg-black shadow-black/10'}`} style={{ backgroundColor: isDarkMode ? 'var(--accent)' : undefined }}>
-                <Zap className={isDarkMode ? 'text-black fill-black' : 'text-white fill-white'} size={10} />
+             <div className={`w-6 h-6 rounded-lg flex items-center justify-center transition-colors shadow-lg ${isDarkMode ? 'bg-accent/15 text-accent border border-accent/25' : 'bg-black text-white'}`} style={{ color: isDarkMode ? 'var(--accent)' : undefined, borderColor: isDarkMode ? 'var(--accent-glow)' : undefined }}>
+                {themeId === 'ENTERPRISE' ? <Layers size={14} /> : <Zap size={14} className={isDarkMode ? 'fill-current' : 'fill-white'} />}
              </div>
-             <h1 className={`text-xl font-black tracking-tighter leading-none uppercase italic transition-colors ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Impulsive</h1>
+             <h1 className={`text-lg font-black tracking-tight leading-none uppercase transition-colors ${themeId === 'ENTERPRISE' ? '' : 'italic'} ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Impulsive</h1>
           </div>
-          <p className={`text-[10px] font-bold uppercase tracking-[0.2em] leading-none ml-7 transition-colors ${isDarkMode ? 'text-accent' : 'text-orange-500'}`} style={{ color: isDarkMode ? 'var(--accent)' : undefined }}>Engine Console</p>
+          <p className={`text-[9px] font-extrabold uppercase tracking-[0.25em] leading-none ml-8 transition-colors ${isDarkMode ? 'text-accent' : 'text-orange-500'}`} style={{ color: isDarkMode ? 'var(--accent)' : undefined }}>Engine Console</p>
         </div>
 
         <div className="space-y-8 flex-1">

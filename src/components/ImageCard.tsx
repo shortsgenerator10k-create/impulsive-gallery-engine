@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { ImageRecord } from '../types';
+import { ImageRecord, ThemeId } from '../types';
 import { Check, Tag, Maximize2, Share2 } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -14,9 +14,10 @@ interface ImageCardProps {
   onSelect: (id: string) => void;
   onPreview: (image: ImageRecord) => void;
   isDarkMode: boolean;
+  themeId?: ThemeId;
 }
 
-export const ImageCard: React.FC<ImageCardProps> = ({ image, isSelected, onSelect, onPreview, isDarkMode }) => {
+export const ImageCard: React.FC<ImageCardProps> = ({ image, isSelected, onSelect, onPreview, isDarkMode, themeId }) => {
   const keywords = image.keywords || [];
   const hasKeywords = keywords.length > 0;
 
@@ -65,21 +66,25 @@ export const ImageCard: React.FC<ImageCardProps> = ({ image, isSelected, onSelec
     }
   };
 
+  const isEnterprise = themeId === 'ENTERPRISE';
+
   return (
     <motion.div
       layout
       id={`image-card-${image.id}`}
-      className={`relative group cursor-pointer aspect-square overflow-hidden rounded-[2rem] border-2 transition-all duration-500 card-3d ${
+      className={`relative group cursor-pointer aspect-square overflow-hidden border transition-all duration-500 card-3d ${
+        isEnterprise ? 'rounded-2xl' : 'rounded-[2rem]'
+      } ${
         isSelected 
           ? (isDarkMode 
-              ? 'border-accent shadow-[0_0_30px_var(--accent-glow)] scale-[0.98] -rotate-1' 
-              : 'border-black ring-[12px] ring-black/5 shadow-2xl scale-[0.98] -rotate-1')
+              ? `border-accent shadow-[0_0_30px_var(--accent-glow)] ${isEnterprise ? 'scale-[0.97]' : 'scale-[0.98] -rotate-1 border-2'}` 
+              : `border-black ring-[12px] ring-black/5 shadow-2xl ${isEnterprise ? 'scale-[0.97]' : 'scale-[0.98] -rotate-1 border-2'}`)
           : (isDarkMode 
-              ? 'border-main bg-surface-1 hover:border-accent hover:shadow-[0_0_20px_var(--accent-glow)] hover:-translate-y-1 hover:rotate-1' 
-              : 'border-gray-100 bg-gray-50 hover:border-black hover:shadow-xl hover:-translate-y-1 hover:rotate-1')
+              ? `border-main bg-surface-1 hover:border-accent hover:shadow-[0_0_20px_var(--accent-glow)] ${isEnterprise ? '' : 'hover:-translate-y-1 hover:rotate-1 border-2'}` 
+              : `border-gray-100 bg-gray-50 hover:border-black hover:shadow-xl ${isEnterprise ? '' : 'hover:-translate-y-1 hover:rotate-1 border-2'}`)
       }`}
       style={{ borderColor: isSelected && isDarkMode ? 'var(--accent)' : undefined }}
-      whileHover={{ scale: 1.04 }}
+      whileHover={{ scale: isEnterprise ? 1.01 : 1.04 }}
       whileTap={{ scale: 0.95 }}
     >
       <img
